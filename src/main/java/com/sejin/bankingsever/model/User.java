@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "user")
 public class User {
-	@Id
-	@Column(name = "id")
-	private String id;
 
-	@Column(name = "password")
-	private String passWord;
+    @Id
+    @Column(name = "id")
+    private String id;
 
+    @Column(name = "password")
+    private String passWord;
 }
