@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/checkId/{id}")
-    public ResponseEntity<?> existsById(@PathVariable String id) {
+    public ResponseEntity<Boolean> existsById(@PathVariable String id) {
         return ResponseEntity.ok(userRepository.existsById(id));
     }
 }
