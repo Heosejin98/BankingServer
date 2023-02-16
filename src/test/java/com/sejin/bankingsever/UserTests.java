@@ -26,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@Transactional
 public class UserTests {
 
     @Autowired
@@ -40,6 +39,7 @@ public class UserTests {
 
     @Test
     @DisplayName("정상 회원 가입 케이스 테스트")
+    @Transactional
     public void createUserTest() {
 
         // given
@@ -55,6 +55,7 @@ public class UserTests {
 
     @Test
     @DisplayName("정상 회원 가입 api 테스트")
+    @Transactional
     public void createUserApiTest() throws Exception {
         // given
         User user = new User("test", "pw_test");
