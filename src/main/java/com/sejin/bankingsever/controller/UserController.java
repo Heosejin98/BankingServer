@@ -1,7 +1,7 @@
 package com.sejin.bankingsever.controller;
 
 import com.sejin.bankingsever.model.User;
-import com.sejin.bankingsever.repository.UserRepository;
+import com.sejin.bankingsever.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @PostMapping("/signup")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         try {
-            User _user = userRepository.save(new User(user.getId(), user.getPassWord()));
+            User _user = userService.createUser(user.getId(), user.getPassWord());
             return new ResponseEntity<>(_user, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -33,6 +33,6 @@ public class UserController {
 
     @GetMapping("/checkId/{id}")
     public ResponseEntity<Boolean> existsById(@PathVariable String id) {
-        return ResponseEntity.ok(userRepository.existsById(id));
+        return ResponseEntity.ok(userService.existsById(id));
     }
 }
