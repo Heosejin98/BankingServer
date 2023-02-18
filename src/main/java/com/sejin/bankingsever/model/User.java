@@ -1,17 +1,20 @@
 package com.sejin.bankingsever.model;
 
+import java.util.List;
+import java.util.ArrayList;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import lombok.Setter;
 
 @Entity
 @Getter
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userNo;
@@ -23,4 +26,8 @@ public class User {
     @NonNull
     @Column(nullable = false, length = 15)
     private String passWord;
+
+    @Setter
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FriendList> friendLists = new ArrayList<>();
 }
