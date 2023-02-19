@@ -24,7 +24,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         try {
-            User _user = userService.createUser(user.getId(), user.getPassWord());
+            User _user = userService.createUser(user.getUserEmail(), user.getPassWord());
             return new ResponseEntity<>(_user, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/checkId/{id}")
-    public ResponseEntity<Boolean> existsById(@PathVariable String id) {
-        return ResponseEntity.ok(userService.existsById(id));
+    public ResponseEntity<Boolean> existsById(@PathVariable String userId) {
+        return ResponseEntity.ok(userService.existsById(userId));
     }
 }

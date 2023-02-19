@@ -12,7 +12,26 @@ public class FriendListService {
     @Autowired
     FriendListRepository friendListRepository;
 
-    public FriendList createFriendList(User user, String friendId) {
-        return friendListRepository.save(new FriendList(user.getUserNo(), friendId, user));
+    public FriendList requestFriendList(User user, String friendId) {
+        return friendListRepository.save(new FriendList(friendId, user));
+    }
+
+    public boolean hasFriendWithId(User user, String friendEmail) {
+        return user.getFriendLists().stream().anyMatch(f -> f.getFriendEmail().equals(friendEmail));
+    }
+
+    public boolean isSelfMatch(User user, String friendEmail){
+        return  user.getUserEmail().equals(friendEmail);
+    }
+    public boolean acceptFriendRequest(User user, String friendEmail) {
+        FriendList friendList = friendListRepository
+                                .findByFriendEmailAndUser(friendEmail, user)
+                                .orElse(null);
+        if (friendList == null) {
+            return false;
+        }
+        friendList.setFriendStatus(FriendList.ACCEPT);
+        friendListRepository.save(friendList);
+        return true;
     }
 }

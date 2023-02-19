@@ -4,5 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class FriendRequestDTO {
-    private String friendId;
+    private String friendEmail;
+    private boolean friendStatus;
 }

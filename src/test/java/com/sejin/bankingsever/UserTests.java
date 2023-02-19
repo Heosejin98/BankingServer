@@ -1,10 +1,8 @@
 package com.sejin.bankingsever;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sejin.bankingsever.model.User;
-import com.sejin.bankingsever.repository.UserRepository;
 import com.sejin.bankingsever.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,23 +31,21 @@ public class UserTests {
     UserService userService;
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
     ObjectMapper objectMapper;
+
+
+    final String USER_EMAIL = "test";
+    final String PASS_WORD = "pw_test";
 
     @Test
     @DisplayName("정상 회원 가입 케이스 테스트")
     public void createUserTest() {
-
-        // given
-        User insertUser = userService.createUser("test", "test");
-
         // when
-        User saveUser = userRepository.findById("test").orElse(null);
+        userService.createUser(USER_EMAIL, PASS_WORD);
+        boolean isExist = userService.existsById(USER_EMAIL);
 
         // then
-        assertThat(insertUser).isEqualTo(saveUser);
+        assertTrue(isExist);
     }
 
 
@@ -57,29 +53,15 @@ public class UserTests {
     @DisplayName("정상 회원 가입 api 테스트")
     public void createUserApiTest() throws Exception {
         // given
-        User user = new User("test", "pw_test");
+
+        User user = new User(USER_EMAIL, PASS_WORD);
 
         // when
         mockMvc.perform(MockMvcRequestBuilders.post("/user/signup")
                 .content(objectMapper.writeValueAsString(user)).contentType(MediaType.APPLICATION_JSON))
             // then
             .andExpect(MockMvcResultMatchers.status().isCreated())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("test"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.passWord").value("pw_test"));
-    }
-
-    @Test
-    @DisplayName("중복 아이디 검증 테스트")
-    public void existsByIdTest() {
-        // Given
-        String id = "testuser";
-        User user = new User(id, "password");
-        userRepository.save(user);
-
-        // When
-        boolean exists = userService.existsById(id);
-
-        // Then
-        assertTrue(exists);
+            .andExpect(MockMvcResultMatchers.jsonPath("$.userEmail").value(USER_EMAIL))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.passWord").value(PASS_WORD));
     }
 }
