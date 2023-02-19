@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:8080")
@@ -27,9 +27,9 @@ public class FriendListController {
     @Autowired
     private FriendListService friendListService;
 
-    void sendFriendRequestException(User user, String friendEmail) {
+    void sendFriendRequestException(User user, String friendEmail, Long userId) {
         if (user == null) {
-            throw new UserNotFoundException("User with ID " + user.getUserId() + " not found");
+            throw new UserNotFoundException("User with ID " + userId + " not found");
         }
         if (!userService.existsById(friendEmail)) {
             throw new IllegalArgumentException("존재하지 않는 아이디 입니다.");
@@ -51,7 +51,7 @@ public class FriendListController {
             User user = userService.getUserById(userId);
             String friendEmail = friendRequest.getFriendEmail();
 
-            sendFriendRequestException(user, friendEmail);
+            sendFriendRequestException(user, friendEmail, userId);
 
             FriendList friendList = friendListService.requestFriendList(user, friendEmail);
             userService.addFriendList(user, friendList);

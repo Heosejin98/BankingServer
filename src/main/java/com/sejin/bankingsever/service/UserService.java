@@ -4,7 +4,6 @@ import com.sejin.bankingsever.model.FriendList;
 import com.sejin.bankingsever.model.User;
 import com.sejin.bankingsever.repository.UserRepository;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,6 @@ public class UserService {
         friendLists.add(friendList);
         user.setFriendLists(friendLists);
     }
-
 
     public User saveUser(User user) {
         return userRepository.save(user);
