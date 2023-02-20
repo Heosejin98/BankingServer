@@ -53,12 +53,12 @@ public class UserTests {
     @DisplayName("정상 회원 가입 api 테스트")
     public void createUserApiTest() throws Exception {
         // given
-
         User user = new User(USER_EMAIL, PASS_WORD);
 
         // when
         mockMvc.perform(MockMvcRequestBuilders.post("/user/signup")
-                .content(objectMapper.writeValueAsString(user)).contentType(MediaType.APPLICATION_JSON))
+                .content(objectMapper.writeValueAsString(user))
+                .contentType(MediaType.APPLICATION_JSON))
             // then
             .andExpect(MockMvcResultMatchers.status().isCreated())
             .andExpect(MockMvcResultMatchers.jsonPath("$.userEmail").value(USER_EMAIL))

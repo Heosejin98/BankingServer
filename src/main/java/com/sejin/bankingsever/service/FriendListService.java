@@ -3,6 +3,7 @@ package com.sejin.bankingsever.service;
 import com.sejin.bankingsever.model.FriendList;
 import com.sejin.bankingsever.model.User;
 import com.sejin.bankingsever.repository.FriendListRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +34,9 @@ public class FriendListService {
         friendList.setFriendStatus(FriendList.ACCEPT);
         friendListRepository.save(friendList);
         return true;
+    }
+
+    public List<FriendList> getFriendListByFriendStatus(Long userId, boolean friendStatus) {
+        return  friendListRepository.findByUserUserIdAndFriendStatus(userId, friendStatus);
     }
 }

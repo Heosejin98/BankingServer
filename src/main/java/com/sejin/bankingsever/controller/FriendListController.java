@@ -4,7 +4,6 @@ import com.sejin.bankingsever.dto.FriendListDTO;
 import com.sejin.bankingsever.exception.UserNotFoundException;
 import com.sejin.bankingsever.model.FriendList;
 import com.sejin.bankingsever.model.User;
-import com.sejin.bankingsever.repository.FriendListRepository;
 import com.sejin.bankingsever.service.FriendListService;
 import com.sejin.bankingsever.service.UserService;
 import java.util.ArrayList;
@@ -33,25 +32,21 @@ public class FriendListController {
     @Autowired
     private FriendListService friendListService;
 
-    @Autowired
-    private FriendListRepository friendListRepository;
-
     private Long getFriendUserId(User friendUser, String friendEmail) {
         if (friendUser == null) {
-            throw new UserNotFoundException("User : Email " + friendEmail + " 찾을 수 없습니다");
+            throw new UserNotFoundException("User : " + friendEmail + " 찾을 수 없습니다");
         }
 
         return friendUser.getUserId();
     }
-    @PostMapping("/request/{userId}")
+    @PostMapping("/request")
     public ResponseEntity<String> sendFriendRequest(
-        @PathVariable Long userId,
-        @RequestBody FriendListDTO friendRequest
+        @RequestParam Long userId,
+        @RequestParam String friendEmail
     ) {
 
         try {
             User user = userService.getUserById(userId);
-            String friendEmail = friendRequest.getFriendEmail();
             User friendUser = userService.getUserByUserEmail(friendEmail);
             Long friendUserId = getFriendUserId(friendUser, friendEmail);
 
@@ -100,7 +95,7 @@ public class FriendListController {
         @RequestParam boolean friendStatus
     ) {
         try {
-            List<FriendList> friendList = friendListRepository.findByUserUserIdAndFriendStatus(userId, friendStatus);
+            List<FriendList> friendList = friendListService.getFriendListByFriendStatus(userId, friendStatus);
             List<FriendListDTO> friendListDTOs = new ArrayList<>();
 
             for (FriendList friend : friendList) {

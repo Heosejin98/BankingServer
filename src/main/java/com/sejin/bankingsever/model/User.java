@@ -3,6 +3,7 @@ package com.sejin.bankingsever.model;
 import java.util.List;
 import java.util.ArrayList;
 import javax.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -12,6 +13,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class User {
 
