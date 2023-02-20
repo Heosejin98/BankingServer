@@ -11,6 +11,4 @@ public class UserDTO {
     private String userEmail;
     @NonNull
     private String passWord;
-    @NonNull
-    private String accountNumber;
 }

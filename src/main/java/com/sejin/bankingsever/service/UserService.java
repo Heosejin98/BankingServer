@@ -18,8 +18,8 @@ public class UserService {
     }
 
 
-    public User createUser(String userEmail, String passWord, String accountNumber) {
-        User user = new User(userEmail, passWord, accountNumber);
+    public User createUser(String userEmail, String passWord) {
+        User user = new User(userEmail, passWord);
         return userRepository.save(user);
     }
 

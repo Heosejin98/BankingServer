@@ -25,15 +25,14 @@ public class FriendListTests {
     final String USER_EMAIL = "test";
     final String FRIEND_EMAIL = "freind_test";
     final String PASS_WORD = "pw_test";
-    final String ACCOUNT_NUMBER = "1234-1234";
 
 
     @Test
     @DisplayName("친구 요청 추가 테스트")
     public void requestFriendTest() {
         // given
-        User user = userService.createUser(USER_EMAIL, PASS_WORD, ACCOUNT_NUMBER);
-        User friend = userService.createUser(FRIEND_EMAIL, PASS_WORD, ACCOUNT_NUMBER);
+        User user = userService.createUser(USER_EMAIL, PASS_WORD);
+        User friend = userService.createUser(FRIEND_EMAIL, PASS_WORD);
 
         // when
         FriendList friendList = friendListService.requestFriendList(user, friend.getUserId());
@@ -49,8 +48,8 @@ public class FriendListTests {
     @DisplayName("친구 요청 수락 테스트")
     public void acceptFriendTest() {
         // given
-        User user = userService.createUser(USER_EMAIL, PASS_WORD, ACCOUNT_NUMBER);
-        User friend = userService.createUser(FRIEND_EMAIL, PASS_WORD, ACCOUNT_NUMBER);
+        User user = userService.createUser(USER_EMAIL, PASS_WORD);
+        User friend = userService.createUser(FRIEND_EMAIL, PASS_WORD);
         FriendList friendList = friendListService.requestFriendList(user, friend.getUserId());
         userService.addFriendList(user, friendList);
         userService.saveUser(user);

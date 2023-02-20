@@ -27,9 +27,8 @@ public class User {
     @Column(nullable = false, length = 15)
     private String passWord;
 
-    @NonNull
-    @Column(nullable = false, unique = true)
-    private String accountNumber;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Account account;
 
     @Setter
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

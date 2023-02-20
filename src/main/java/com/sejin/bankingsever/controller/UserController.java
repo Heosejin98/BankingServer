@@ -27,8 +27,7 @@ public class UserController {
         try {
             User _user = userService.createUser(
                 userDTO.getUserEmail(),
-                userDTO.getPassWord(),
-                userDTO.getAccountNumber()
+                userDTO.getPassWord()
             );
 
             return new ResponseEntity<>(_user, HttpStatus.CREATED);
