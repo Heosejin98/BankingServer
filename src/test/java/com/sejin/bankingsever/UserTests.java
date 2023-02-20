@@ -36,12 +36,13 @@ public class UserTests {
 
     final String USER_EMAIL = "test";
     final String PASS_WORD = "pw_test";
+    final String ACCOUNT_NUMBER = "1234-1234";
 
     @Test
     @DisplayName("정상 회원 가입 케이스 테스트")
     public void createUserTest() {
         // when
-        User user = userService.createUser(USER_EMAIL, PASS_WORD);
+        User user = userService.createUser(USER_EMAIL, PASS_WORD, ACCOUNT_NUMBER);
         boolean isExist = userService.existsById(user.getUserId());
 
         // then
@@ -54,7 +55,7 @@ public class UserTests {
     public void createUserApiTest() throws Exception {
         // given
 
-        User user = new User(USER_EMAIL, PASS_WORD);
+        User user = new User(USER_EMAIL, PASS_WORD, ACCOUNT_NUMBER);
 
         // when
         mockMvc.perform(MockMvcRequestBuilders.post("/user/signup")

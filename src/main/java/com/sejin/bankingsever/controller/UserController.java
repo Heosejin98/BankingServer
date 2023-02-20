@@ -1,5 +1,6 @@
 package com.sejin.bankingsever.controller;
 
+import com.sejin.bankingsever.dto.UserDTO;
 import com.sejin.bankingsever.model.User;
 import com.sejin.bankingsever.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,14 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@RequestBody UserDTO userDTO) {
         try {
-            User _user = userService.createUser(user.getUserEmail(), user.getPassWord());
+            User _user = userService.createUser(
+                userDTO.getUserEmail(),
+                userDTO.getPassWord(),
+                userDTO.getAccountNumber()
+            );
+
             return new ResponseEntity<>(_user, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -27,6 +27,10 @@ public class User {
     @Column(nullable = false, length = 15)
     private String passWord;
 
+    @NonNull
+    @Column(nullable = false, unique = true)
+    private String accountNumber;
+
     @Setter
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FriendList> friendLists = new ArrayList<>();

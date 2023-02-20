@@ -17,8 +17,10 @@ public class UserService {
         return userRepository.existsByUserId(userId);
     }
 
-    public User createUser(String userEmail, String passWord) {
-        return userRepository.save(new User(userEmail, passWord));
+
+    public User createUser(String userEmail, String passWord, String accountNumber) {
+        User user = new User(userEmail, passWord, accountNumber);
+        return userRepository.save(user);
     }
 
     public User getUserByUserEmail(String userEmail) {
