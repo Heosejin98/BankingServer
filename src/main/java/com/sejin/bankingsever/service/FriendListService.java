@@ -12,20 +12,20 @@ public class FriendListService {
     @Autowired
     FriendListRepository friendListRepository;
 
-    public FriendList requestFriendList(User user, String friendId) {
-        return friendListRepository.save(new FriendList(friendId, user));
+    public FriendList requestFriendList(User user, Long friendUserId) {
+        return friendListRepository.save(new FriendList(friendUserId, user));
     }
 
-    public boolean hasFriendWithId(User user, String friendEmail) {
-        return user.getFriendLists().stream().anyMatch(f -> f.getFriendEmail().equals(friendEmail));
+    public boolean hasFriendWithId(User user, Long friendUserId) {
+        return user.getFriendLists().stream().anyMatch(f -> f.getFriendUserId().equals(friendUserId));
     }
 
-    public boolean isSelfMatch(User user, String friendEmail){
-        return  user.getUserEmail().equals(friendEmail);
+    public boolean isSelfMatch(User user, Long friendUserId){
+        return  user.getUserId().equals(friendUserId);
     }
-    public boolean acceptFriendRequest(User user, String friendEmail) {
+    public boolean acceptFriendRequest(User user, Long friendUserId) {
         FriendList friendList = friendListRepository
-                                .findByFriendEmailAndUser(friendEmail, user)
+                                .findByFriendUserIdAndUser(friendUserId, user)
                                 .orElse(null);
         if (friendList == null) {
             return false;

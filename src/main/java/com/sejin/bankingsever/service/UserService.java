@@ -13,15 +13,17 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean existsById(String userEmail) {
-        return userRepository.existsByUserEmail(userEmail);
+    public boolean existsById(Long userId) {
+        return userRepository.existsByUserId(userId);
     }
 
     public User createUser(String userEmail, String passWord) {
         return userRepository.save(new User(userEmail, passWord));
     }
 
-
+    public User getUserByUserEmail(String userEmail) {
+        return userRepository.findByUserEmail(userEmail);
+    }
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }

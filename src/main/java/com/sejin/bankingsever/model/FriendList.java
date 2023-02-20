@@ -1,6 +1,5 @@
 package com.sejin.bankingsever.model;
 
-import com.sun.istack.NotNull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +29,7 @@ public class FriendList {
 
     @NonNull
     @Column(nullable = false, length = 15)
-    private String friendEmail;
+    private Long friendUserId;
 
     @Setter
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")

@@ -32,12 +32,13 @@ public class FriendListTests {
     public void requestFriendTest() {
         // given
         User user = userService.createUser(USER_EMAIL, PASS_WORD);
+        User friend = userService.createUser(FRIEND_EMAIL, PASS_WORD);
 
         // when
-        FriendList friendList = friendListService.requestFriendList(user, FRIEND_EMAIL);
+        FriendList friendList = friendListService.requestFriendList(user, friend.getUserId());
         userService.addFriendList(user, friendList);
         userService.saveUser(user);
-        boolean isExist1 = friendListService.hasFriendWithId(user, FRIEND_EMAIL);
+        boolean isExist1 = friendListService.hasFriendWithId(user, friend.getUserId());
 
         // then
         assertTrue(isExist1);
@@ -48,12 +49,13 @@ public class FriendListTests {
     public void acceptFriendTest() {
         // given
         User user = userService.createUser(USER_EMAIL, PASS_WORD);
-        FriendList friendList = friendListService.requestFriendList(user, FRIEND_EMAIL);
+        User friend = userService.createUser(FRIEND_EMAIL, PASS_WORD);
+        FriendList friendList = friendListService.requestFriendList(user, friend.getUserId());
         userService.addFriendList(user, friendList);
         userService.saveUser(user);
 
         // when
-        boolean isAccept1 = friendListService.acceptFriendRequest(user, FRIEND_EMAIL);
+        boolean isAccept1 = friendListService.acceptFriendRequest(user, friend.getUserId());
 
         // then
         assertTrue(isAccept1);

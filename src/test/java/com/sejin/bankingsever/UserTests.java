@@ -41,8 +41,8 @@ public class UserTests {
     @DisplayName("정상 회원 가입 케이스 테스트")
     public void createUserTest() {
         // when
-        userService.createUser(USER_EMAIL, PASS_WORD);
-        boolean isExist = userService.existsById(USER_EMAIL);
+        User user = userService.createUser(USER_EMAIL, PASS_WORD);
+        boolean isExist = userService.existsById(user.getUserId());
 
         // then
         assertTrue(isExist);
