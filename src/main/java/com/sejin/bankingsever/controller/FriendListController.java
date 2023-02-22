@@ -32,11 +32,13 @@ public class FriendListController {
     @Autowired
     private FriendListService friendListService;
 
-    private Long getFriendUserId(User friendUser, String friendEmail) {
+    private Long getFriendUserId(
+        User friendUser,
+        String friendEmail
+    ) {
         if (friendUser == null) {
             throw new UserNotFoundException("User : " + friendEmail + " 찾을 수 없습니다");
         }
-
         return friendUser.getUserId();
     }
     @PostMapping("/request")
