@@ -30,13 +30,20 @@ public class AccountService {
         String accountNumber
     ) {
         User user = userRepository.findById(userId)
-            .orElseThrow(() -> new UserNotFoundException("찾을 수 없는 유저 : " + userRepository.findById(userId)));
+            .orElseThrow(() -> new UserNotFoundException("찾을 수 없는 유저"));
 
         Account account = new Account(accountNumber, user);
         account.setBalance(BigDecimal.ZERO);
 
         return accountRepository.save(account);
     }
+
+    @Transactional
+    public boolean existsByUserId(Long userId) {
+        return accountRepository.existsByUserUserId(userId);
+    }
+
+
     @Transactional
     public void addBalance(
         Long userId,

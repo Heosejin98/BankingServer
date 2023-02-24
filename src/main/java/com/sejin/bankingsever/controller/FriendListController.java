@@ -41,6 +41,8 @@ public class FriendListController {
         }
         return friendUser.getUserId();
     }
+
+    //Body 바꾸기
     @PostMapping("/request")
     public ResponseEntity<String> sendFriendRequest(
         @RequestParam Long userId,
@@ -85,7 +87,7 @@ public class FriendListController {
             if (isAccept) {
                 return ResponseEntity.ok("친구 수락");
             }
-            return ResponseEntity.ok("친구 추가 실패");
+            return ResponseEntity.badRequest().body("친구 추가 실패");
         } catch (UserNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

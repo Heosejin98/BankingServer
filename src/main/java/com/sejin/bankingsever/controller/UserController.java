@@ -23,14 +23,15 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<User> createUser(
+        @RequestBody UserDTO userDTO
+    ) {
         try {
-            User _user = userService.createUser(
-                userDTO.getUserEmail(),
-                userDTO.getPassWord()
-            );
+            String userEmail = userDTO.getUserEmail();
+            String passWord = userDTO.getPassWord();
+            User user = userService.createUser(userEmail, passWord);
 
-            return new ResponseEntity<>(_user, HttpStatus.CREATED);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
